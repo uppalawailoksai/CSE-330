@@ -1,0 +1,67 @@
+Given a string S. The task is to print all unique permutations of the given string in lexicographically sorted order.
+
+Input: ABC
+Output:
+ABC ACB BAC BCA CAB CBA
+Explanation:
+Given string ABC has permutations in 6 
+forms as ABC, ACB, BAC, BCA, CAB and CBA .
+Example 2:
+
+Input: ABSG
+Output:
+ABGS ABSG AGBS AGSB ASBG ASGB BAGS 
+BASG BGAS BGSA BSAG BSGA GABS GASB 
+GBAS GBSA GSAB GSBA SABG SAGB SBAG 
+SBGA SGAB SGBA
+Explanation:
+Given string ABSG has 24 permutations.
+
+
+
+
+
+
+Code:
+
+class Solution
+{
+	public:
+	    vector<string> ans;
+	    set<string> s;
+	    
+	    void solve(string &S, string &ds, bool freq[])
+	    {
+	        if(ds.size()==S.size())
+	        {
+	            s.insert(ds);
+	            return;
+	        }
+	        
+	        for(int i = 0;i<S.size();i++)
+	        {
+	            if(!freq[i])
+	            {
+	                ds += S[i];
+	                freq[i] = 1;
+	                solve(S, ds, freq);
+	                freq[i] = 0;
+	                ds.pop_back();
+	            }
+	        }
+	    }
+	    
+		vector<string>find_permutation(string S)
+		{
+		    // Code here there
+		    string ds = "";
+		    bool freq[S.size()]={0};
+		    
+		    solve(S, ds, freq);
+		    
+		    for(auto &a:s)
+		        ans.push_back(a);
+		    
+		    return ans;
+		}
+};

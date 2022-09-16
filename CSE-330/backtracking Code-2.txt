@@ -1,0 +1,64 @@
+Given a string you need to print all possible strings that can be made by placing spaces (zero or one) in between them. The output should be printed in sorted increasing order of strings
+
+Example 1:
+
+Input:
+S = "ABC"
+Output: (A B C)(A BC)(AB C)(ABC)
+Explanation:
+ABC
+AB C
+A BC
+A B C
+These are the possible combination of "ABC".
+ 
+
+Example 2:
+
+Input:
+S = "AB"
+Output: (A B)(AB)
+
+
+
+
+
+
+Code:
+
+class Solution{
+public:
+    void check (vector<string> &v, string out, string in){
+        if (in==""){
+            v.push_back(out);
+            return;
+        }
+        if (out == ""){
+            out.push_back(in[0]);
+            in.erase(in.begin());
+            check(v,out,in);
+            return;
+            
+        }
+        
+        string out1 = out+ " " + in[0];
+        string out2 = out + in[0];
+        in.erase(in.begin());
+        
+        check(v,out1,in);
+        check(v,out2,in);
+        
+        
+    }
+
+
+    vector<string> permutation(string S){
+        vector <string> v;
+        string out = "";
+        check(v,out,S);
+        
+        return v;
+        
+        
+    }
+};

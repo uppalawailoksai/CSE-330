@@ -1,0 +1,47 @@
+
+You are required to distribute bananas among some people according to the following conditions:
+
+You can select the number of people that receive bananas.
+Each person should get more than one banana.
+One person cannot receive all the bananas.
+All the bananas must be distributed.
+Each person can only receive an integral number of bananas.
+Write a program to determine whether the bananas can be distributed among the people.
+
+Input format
+
+First line: denoting the number of test cases
+Next lines:
+Output format
+
+For each test case, print or depending upon the result.
+
+CODE:
+
+#include <stdio.h>
+#include <stdbool.h>
+#define Max 1000001
+bool p[Max]={};
+void seive()
+{
+p[0]=p[1]=0;
+for(int i=2;i*i<Max;i++)
+if(!p[i])
+for(int j=i*i;j<Max;j+=i)
+p[j]=1;
+}
+int main()
+{
+int t,n;
+scanf("%d",&t);
+seive();
+while(t--)
+{
+scanf("%d",&n);
+if(!p[n])
+printf("No\n");
+else
+printf("Yes\n");
+}
+return 0;
+}

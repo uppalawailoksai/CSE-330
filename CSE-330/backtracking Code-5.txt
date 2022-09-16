@@ -1,0 +1,68 @@
+Given an integer array a[ ] of N elements and an integer K, the task is to check if the array a[ ] could be divided into K non-empty subsets with equal sum of elements.
+Note: All elements of this array should be part of exactly one partition.
+
+
+
+Input: 
+N = 5
+a[] = {2,1,4,5,6}
+K = 3
+Output: 
+1
+Explanation: we can divide above array 
+into 3 parts with equal sum as (2, 4), 
+(1, 5), (6)
+Example 2:
+
+Input: 
+N = 5 
+a[] = {2,1,5,5,6}
+K = 3
+Output: 
+0
+Explanation: It is not possible to divide
+above array into 3 parts with equal sum.
+
+
+Code:
+
+class Solution{
+  public:
+  int ans;
+  void work(int a[],int n,int k,vector<int>&visited,int s,int sum)
+  {
+      if(k==0)
+      {
+          ans=1;
+          return;
+      }
+      
+      else if(s==sum)
+      {
+          work(a,n,k-1,visited,0,sum);
+      }
+      else
+      for(int i=0;i<n;i++)
+      {
+          if(visited[i]==0)
+          {
+              visited[i]=1;
+              work(a,n,k,visited,s+a[i],sum);
+              visited[i]=0;
+          }
+      }
+      
+  }
+    bool isKPartitionPossible(int a[], int n, int k)
+    {
+         int sum=0;
+         ans=0;
+         for(int i=0;i<n;i++)
+         sum+=a[i];
+         if(sum%k!=0)
+         return 0;
+         vector<int>visited(n,0);
+         work(a,n,k,visited,0,sum/k);
+         return ans;
+    }
+};

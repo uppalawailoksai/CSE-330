@@ -1,0 +1,83 @@
+Ma5termind is having his birthday this weekend. Yeah !! You all are invited .
+ Ma5termind wants to send an invitation to those groups of people which he finds interesting. 
+A group of N people is said to be interesting only if the number of their possible circular permutations is divisible by N.
+ Now, Ma5termind got confused as he is having all the groups having number of people belongs to [L,R] (both inclusive).
+ Help him in find the minimum number of invitation cards required and win yourself a chance to attend Ma5termind's birthday party .
+
+[INPUT:]
+
+First line of the input contains a single integer T denoting the number of test cases.
+ First and the only line of each test case consists of two space separated integers L and R
+ denoting the range such that N belongs to [L,R] (both inclusive).
+
+[OUTPUT:]
+
+Output consists of T lines each containing the answer to the corresponding test case denoting
+ the minimum number of invitation cards required by the Ma5termind.
+
+[CONSTRAINTS:]
+
+T<=10^6
+
+1<=L<=R<=10^6
+
+Sample Input
+1
+10 15
+
+Sample Output
+4
+Time Limit: 1
+Memory Limit: 256
+Source Limit:
+Explanation
+For all 'n' belongs to the set {10,12,14,15} people . Group is interesting so, ma5termind will require 4 invitation cards in all.
+
+Code:
+
+#include <bits/stdc++.h>
+#define _ ios_base::sync_with_stdio(false);cin.tie(0);
+using namespace std;
+#define pb push_back
+#define pob pop_back
+#define pf push_front
+#define pof pop_front
+#define mp make_pair
+#define all(a) a.begin(),a.end()
+#define bitcnt(x) __builtin_popcountll(x)
+#define MOD 1000000007
+#define NIL 0
+#define MAXN 220001
+#define EPS 1e-5
+#define INF (1<<28)
+typedef unsigned long long int uint64;
+typedef long long int int64;
+int a[1000006];
+int cnt[1000006];
+int main(){
+int i,j;
+for(i=2;i<=1000000;i++){
+if(a[i]==0){
+for(j=2*i;j<=1000000;j+=i)
+a[j]++;
+}
+}
+a[1]=1;
+cnt[1]=0;
+a[4]=0;
+for(i=2;i<=1000000;i++){
+if(a[i]==0)
+cnt[i]=1+cnt[i-1];
+else
+cnt[i]=cnt[i-1];
+}
+int t,l,r;
+cin>>t;
+while(t--){
+scanf("%d%d",&l,&r);
+int ans=(r-l+1)-(cnt[r]-cnt[l]);
+if(a[l]==0)
+ans--;
+printf("%d\n",ans);}
+return 0;
+}

@@ -1,0 +1,79 @@
+The n-queens puzzle is the problem of placing n queens on a (n×n) chessboard such that no two queens can attack each other.
+Given an integer n, find all distinct solutions to the n-queens puzzle. Each solution contains distinct board configurations of the n-queens’ placement, where the solutions are a permutation of [1,2,3..n] in increasing order, here the number in the ith place denotes that the ith-column queen is placed in the row with that number. For eg below figure represents a chessboard [3 1 4 2].
+
+
+Input:
+1
+Output:
+[1]
+Explaination:
+Only one queen can be placed 
+in the single cell available.
+Example 2:
+
+Input:
+4
+Output:
+[2 4 1 3 ] [3 1 4 2 ]
+Explaination:
+These are the 2 possible solutions.
+
+Code:
+
+
+
+class Solution{
+public:
+
+void solve(int col, vector<bool> &leftRow, vector<bool> &upperDiagonal, vector<bool> &lowerDiagonal, vector<int> &arr, vector<vector<int>> &res) {
+
+        if(col == leftRow.size()) {
+
+            res.push_back(arr);
+
+            return;
+
+        }
+
+        
+
+        for(int row = 0; row < leftRow.size(); row++) {
+
+            if(!leftRow[row] && !upperDiagonal[row+col] && !lowerDiagonal[leftRow.size()-1+col-row]) {
+
+                leftRow[row] = upperDiagonal[row+col] = lowerDiagonal[leftRow.size()-1+col-row] = true;
+
+                arr.push_back(row+1);
+
+                solve(col+1, leftRow, upperDiagonal, lowerDiagonal, arr, res);
+
+                arr.pop_back();
+
+                leftRow[row] = upperDiagonal[row+col] = lowerDiagonal[leftRow.size()-1+col-row] = false;
+
+            }
+
+        }
+
+    }
+
+    vector<vector<int>> nQueen(int n) {
+
+        vector<vector<int>> res;
+
+        vector<int> arr;
+
+        vector<bool> leftRow(n);
+
+        vector<bool> upperDiagonal(2*n-1);
+
+        vector<bool> lowerDiagonal(2*n-1);
+
+        
+
+        solve(0, leftRow, upperDiagonal, lowerDiagonal, arr, res);
+
+        return res;
+
+    }
+};

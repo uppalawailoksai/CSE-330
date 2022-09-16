@@ -1,0 +1,73 @@
+
+Consider an array A of size N. You start from the index 0 and your goal is to reach index  in exactly M moves.
+
+At any index, you can move forward or backward by a number of steps that is equal to a prime divisor of the value which exists at that index. You cannot go beyond the array while going forward or backward.
+
+Write a program to determine whether it is possible to reach index  in M moves.
+
+Input format
+
+First line: T (number of test cases)
+First line in each test case: N
+Second line in each test case: N space-separated integers (denoting the array A)
+Third line in each test case: M
+Output format
+
+For each test case, print YES or NO depending upon the result.
+
+
+
+
+
+Code:
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+int primes[] = {2,3,5,7,11,13,17,19,23,29,31,37};
+
+bool solve(ll a[], ll start, ll moves, ll target){
+	if(	moves == 0 && start == target){
+		return true;
+	} 
+	else if( moves == 0 && start != target)
+	{
+		return false;	
+	} 
+	if(start < 0 || start > target){
+		return false;	
+	} 
+	else{
+		for(int i = 0; i < 12; i++){
+			if(a[start] % primes[i] == 0){
+				return (solve(a, start + primes[i], moves - 1, target) || solve(a, start - primes[i], moves - 1, target));
+			}
+		}
+	}
+	return false;
+}
+
+int main(){
+	int t;
+	cin >> t;
+	while(t--){
+		ll size;
+		ll i;
+		cin >> size;
+		ll a[size];
+		for(i = 0; i < size; i++){
+			cin >> a[i];
+		}
+		ll m;
+		cin >> m;
+		if(solve(a, 0, m, size-1)){
+			cout << "YES" << endl;
+		}
+		else{
+			cout << "NO" << endl;
+		}
+		
+	}
+	return 0;
+}
